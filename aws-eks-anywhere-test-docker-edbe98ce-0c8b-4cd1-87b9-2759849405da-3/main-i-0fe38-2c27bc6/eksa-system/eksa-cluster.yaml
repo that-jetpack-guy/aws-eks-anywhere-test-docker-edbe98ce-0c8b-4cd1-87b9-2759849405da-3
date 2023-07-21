@@ -1,0 +1,59 @@
+apiVersion: anywhere.eks.amazonaws.com/v1alpha1
+kind: Cluster
+metadata:
+  name: main-i-0fe38-2c27bc6
+  namespace: default
+spec:
+  bundlesRef:
+    apiVersion: anywhere.eks.amazonaws.com/v1alpha1
+    name: bundles-7343
+    namespace: eksa-system
+  clusterNetwork:
+    cniConfig:
+      cilium: {}
+    pods:
+      cidrBlocks:
+      - 192.168.0.0/16
+    services:
+      cidrBlocks:
+      - 10.96.0.0/12
+  controlPlaneConfiguration:
+    count: 1
+  datacenterRef:
+    kind: DockerDatacenterConfig
+    name: main-i-0fe38-2c27bc6
+  eksaVersion: v0.0.0-dev+build.7343
+  externalEtcdConfiguration:
+    count: 1
+  gitOpsRef:
+    kind: FluxConfig
+    name: eksa-test
+  kubernetesVersion: "1.27"
+  managementCluster:
+    name: main-i-0fe38-2c27bc6
+  workerNodeGroupConfigurations:
+  - count: 1
+    name: md-0
+
+---
+apiVersion: anywhere.eks.amazonaws.com/v1alpha1
+kind: DockerDatacenterConfig
+metadata:
+  name: main-i-0fe38-2c27bc6
+  namespace: default
+spec: {}
+
+---
+apiVersion: anywhere.eks.amazonaws.com/v1alpha1
+kind: FluxConfig
+metadata:
+  name: eksa-test
+  namespace: default
+spec:
+  branch: aws-eks-anywhere-test-docker-edbe98ce-0c8b-4cd1-87b9-2759849405da-3
+  clusterConfigPath: aws-eks-anywhere-test-docker-edbe98ce-0c8b-4cd1-87b9-2759849405da-3
+  git:
+    repositoryUrl: ssh://git@github.com/that-jetpack-guy/aws-eks-anywhere-test-docker-edbe98ce-0c8b-4cd1-87b9-2759849405da-3.git
+  systemNamespace: default
+
+---
